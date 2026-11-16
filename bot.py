@@ -62,7 +62,7 @@ class TypingBot:
     MAX_HEARTS = 5
 
     # Web App URL - set via environment variable WEB_APP_URL
-    WEB_APP_URL = os.environ.get("WEB_APP_URL", "https://walks-discover-applicants-computational.trycloudflare.com")
+    WEB_APP_URL = os.environ.get("WEB_APP_URL", "https://typeowl-production.up.railway.app")
 
     def __init__(self):
         self.db = DatabaseManager(config.db_path)
