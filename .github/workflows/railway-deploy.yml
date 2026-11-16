@@ -11,23 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Railway CLI
+        uses: railwayapp/railway-cli@v1
       - name: Deploy Web to Railway
-        uses: railwayapp/railway-deploy@v1
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-          service: typeowl
-          command: up --detach
-          working_directory: .
+        run: railway up --service typeowl --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
   deploy-bot:
     name: Deploy Bot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Railway CLI
+        uses: railwayapp/railway-cli@v1
       - name: Deploy Bot to Railway
-        uses: railwayapp/railway-deploy@v1
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-          service: bot
-          command: up --detach
-          working_directory: .
+        run: railway up --service bot --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
