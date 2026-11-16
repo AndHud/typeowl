@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#58CC02">
+    <meta name="description" content="TypeOwl — тренажёр слепой печати">
+    <title>TypeOwl</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" class="app">
+        <!-- Loading -->
+        <div id="loading" class="screen active">
+            <div class="loader">
+                <div class="owl">
+                    <div class="owl-eyes"><span></span><span></span></div>
+                    <div class="owl-beak"></div>
+                </div>
+                <p>TypeOwl</p>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="menu" class="screen">
+            <header class="top-bar">
+                <div class="user-stats">
+                    <div class="stat"><span id="stat-xp">0</span> XP</div>
+                    <div class="stat"><span id="stat-streak">0</span> 🔥</div>
+                    <div class="stat"><span id="stat-level">1</span> ур.</div>
+                </div>
+            </header>
+
+            <main class="menu-content">
+                <div class="welcome">
+                    <h1 id="user-greeting">Привет! 🦉</h1>
+                    <p id="user-langs" class="langs">Выбери язык ниже</p>
+                </div>
+
+                <div class="lang-selector" id="lang-selector">
+                    <button class="lang-btn" data-lang="ru" aria-pressed="true">
+                        <span class="lang-flag">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                        <span class="lang-check">✓</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en" aria-pressed="false">
+                        <span class="lang-flag">🇺🇸</span>
+                        <span class="lang-name">English</span>
+                        <span class="lang-check">✓</span>
+                    </button>
+                </div>
+
+                <button class="btn-primary btn-large" id="start-btn" disabled>
+                    Начать урок
+                </button>
+
+                <div class="quick-stats" id="quick-stats" style="display: none;">
+                    <div class="qstat">
+                        <span class="qstat-val" id="qs-lessons">0</span>
+                        <span class="qstat-label">Уроков</span>
+                    </div>
+                    <div class="qstat">
+                        <span class="qstat-val" id="qs-wpm">0</span>
+                        <span class="qstat-label">WPM</span>
+                    </div>
+                    <div class="qstat">
+                        <span class="qstat-val" id="qs-acc">0%</span>
+                        <span class="qstat-label">Точность</span>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="bottom-nav">
+                <button class="nav-btn active" data-screen="menu">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Меню</span>
+                </button>
+                <button class="nav-btn" data-screen="profile">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Профиль</span>
+                </button>
+                <button class="nav-btn" data-screen="settings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Настройки</span>
+                </button>
+            </footer>
+        </div>
+
+        <!-- Typing Lesson -->
+        <div id="lesson" class="screen">
+            <header class="lesson-header">
+                <div class="lesson-progress">
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
+                <div class="lesson-stats">
+                    <span class="stat-mini hearts" id="hearts-display">❤️❤️❤️❤️❤️</span>
+                    <span class="stat-mini xp" id="xp-display">+0 XP</span>
+                    <span class="stat-mini acc" id="acc-display">100%</span>
+                </div>
+            </header>
+
+            <main class="lesson-content">
+                <div class="text-area" id="text-area">
+                    <div class="text-line" id="text-line"></div>
+                    <div class="caret" id="caret"></div>
+                </div>
+
+                <div class="hint-row" id="hint-row">
+                    <kbd class="next-key" id="next-key"></kbd>
+                    <span class="next-text" id="next-text"></span>
+                </div>
+
+                <div class="keyboard-wrap" id="keyboard-wrap"></div>
+            </main>
+
+            <footer class="lesson-footer">
+                <button class="btn-ghost" id="btn-backspace" aria-label="Backspace">
+                    <svg viewBox="0 0 24 24"><path d="M21 4H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M14 12H8M10 8l4 4-4 4"/></svg>
+                </button>
+                <button class="btn-danger" id="btn-exit">Выйти</button>
+            </footer>
+        </div>
+
+        <!-- Result Modal -->
+        <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-backdrop" id="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-emoji" id="modal-emoji">🎉</div>
+                    <h2 id="modal-title">Урок пройден!</h2>
+                    <p id="modal-subtitle">Отличная работа!</p>
+                </div>
+
+                <div class="modal-stats" id="modal-stats"></div>
+
+                <div class="xp-breakdown" id="xp-breakdown"></div>
+
+                <div class="modal-actions">
+                    <button class="btn-primary btn-large" id="modal-next">Следующий урок</button>
+                    <button class="btn-secondary" id="modal-retry">Повторить</button>
+                    <button class="btn-ghost" id="modal-menu">В меню</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile" class="screen">
+            <header class="top-bar">
+                <h1>Профиль</h1>
+            </header>
+            <main class="profile-content" id="profile-content"></main>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings" class="screen">
+            <header class="top-bar">
+                <h1>Настройки</h1>
+            </header>
+            <main class="settings-content" id="settings-content"></main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
