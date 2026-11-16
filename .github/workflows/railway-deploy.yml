@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Railway CLI
-        uses: railwayapp/railway-cli@v1
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
       - name: Deploy Web to Railway
         run: railway up --service typeowl --detach
         env:
@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Railway CLI
-        uses: railwayapp/railway-cli@v1
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
       - name: Deploy Bot to Railway
         run: railway up --service bot --detach
         env:
